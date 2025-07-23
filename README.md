@@ -24,11 +24,12 @@ Este proyecto es una aplicación web desarrollada en \*\*Python (Flask)\*\* cone
 
 
 
-\## 📸 Capturas (opcional)
+\## 📸 Capturas 
+
+![Captura principal](imagenes/captura1.png)
 
 
 
-Agregá capturas de pantalla si querés mostrar el diseño de tu app.
 
 
 
