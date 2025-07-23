@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmar Venta</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eef7ff;
+            padding: 30px;
+        }
+
+        h2 {
+            color: #007acc;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+
+        .resumen {
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            margin-right: 10px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .btn-confirmar {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .btn-cancelar {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .resumen strong {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>🧾 Confirmar venta</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Precio unitario</th>
+                <th>Cantidad</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in detalles %}
+            <tr>
+                <td>{{ item.nombre }}</td>
+                <td>${{ '%.2f'|format(item.precio) }}</td>
+                <td>{{ item.cantidad }}</td>
+                <td>${{ '%.2f'|format(item.subtotal) }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="resumen">
+        <p>Total sin descuento: <strong>${{ '%.2f'|format(total) }}</strong></p>
+        <p>Descuento aplicado: <strong>${{ '%.2f'|format(descuento) }}</strong></p>
+        <p>Total a pagar: <strong>${{ '%.2f'|format(total_final) }}</strong></p>
+    </div>
+
+    <form method="POST" action="{{ url_for('confirmar_venta') }}">
+        <!-- Datos ocultos -->
+        <input type="hidden" name="id_cliente" value="{{ id_cliente }}">
+        <input type="hidden" name="tipo_pago" value="{{ tipo_pago }}">
+        <input type="hidden" name="id_empleado" value="{{ id_empleado }}">
+        <input type="hidden" name="descuento" value="{{ descuento }}">
+        {% for p in productos %}
+            <input type="hidden" name="productos[]" value="{{ p }}">
+        {% endfor %}
+        {% for c in cantidades %}
+            <input type="hidden" name="cantidades[]" value="{{ c }}">
+        {% endfor %}
+
+        <button type="submit" class="btn btn-confirmar">✅ Confirmar venta</button>
+        <a href="{{ url_for('registrar_venta') }}" class="btn btn-cancelar">❌ Cancelar</a>
+    </form>
+
+</body>
+</html>

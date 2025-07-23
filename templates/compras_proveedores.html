@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}Compras a Proveedores{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-6 py-8">
+    <h2 class="text-3xl font-semibold mb-6 text-center text-primary">Compras a Proveedores</h2>
+
+    <!-- Formulario para registrar compra -->
+    <div class="bg-white shadow-lg rounded-2xl p-8 mb-6">
+        <form method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+                <label for="proveedor" class="block mb-2 text-lg font-medium text-secondary">Proveedor</label>
+                <select name="proveedor" id="proveedor" required class="w-full p-4 border-2 border-primary bg-white text-secondary rounded-2xl focus:ring-primary focus:outline-none transition-all">
+                    {% for proveedor in proveedores %}
+                        <option value="{{ proveedor.Id_Proveedor }}">{{ proveedor.Nombre }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div>
+                <label for="producto" class="block mb-2 text-lg font-medium text-secondary">Producto</label>
+                <select name="producto" id="producto" required class="w-full p-4 border-2 border-primary bg-white text-secondary rounded-2xl focus:ring-primary focus:outline-none transition-all">
+                    {% for producto in productos %}
+                        <option value="{{ producto.Id_Producto }}">{{ producto.Nombre }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div>
+                <label for="cantidad" class="block mb-2 text-lg font-medium text-secondary">Cantidad</label>
+                <input type="number" name="cantidad" id="cantidad" min="1" required class="w-full p-4 border-2 border-primary bg-white text-secondary rounded-2xl focus:ring-primary focus:outline-none transition-all">
+            </div>
+
+            <div>
+                <label for="precio_unitario" class="block mb-2 text-lg font-medium text-secondary">Precio Unitario</label>
+                <input type="number" name="precio_unitario" id="precio_unitario" step="0.01" min="0" required class="w-full p-4 border-2 border-primary bg-white text-secondary rounded-2xl focus:ring-primary focus:outline-none transition-all">
+            </div>
+
+            <div class="md:col-span-2 flex justify-end mt-4">
+                <button type="submit" class="bg-primary hover:bg-hover-primary text-white font-semibold py-3 px-8 rounded-2xl transition-all shadow-md">
+                    Registrar Compra
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Historial de compras -->
+    <div class="bg-white shadow-lg rounded-2xl p-8">
+        <h3 class="text-2xl font-semibold mb-6 text-primary">Historial de Compras</h3>
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-300">
+                <thead class="bg-primary text-white">
+                    <tr>
+                        <th class="px-6 py-4 text-left text-lg font-medium">Fecha</th>
+                        <th class="px-6 py-4 text-left text-lg font-medium">Proveedor</th>
+                        <th class="px-6 py-4 text-left text-lg font-medium">Producto</th>
+                        <th class="px-6 py-4 text-left text-lg font-medium">Cantidad</th>
+                        <th class="px-6 py-4 text-left text-lg font-medium">Precio Unitario</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    {% for compra in compras %}
+                    <tr class="hover:bg-hover-table transition">
+                        <td class="px-6 py-4 text-sm text-secondary">{{ compra.Fecha.strftime('%Y-%m-%d') }}</td>
+                        <td class="px-6 py-4 text-sm text-secondary">{{ compra.Proveedor }}</td>
+                        <td class="px-6 py-4 text-sm text-secondary">{{ compra.Producto }}</td>
+                        <td class="px-6 py-4 text-sm text-secondary">{{ compra.Cantidad }}</td>
+                        <td class="px-6 py-4 text-sm text-secondary">${{ '%.2f' | format(compra.Precio_Compra) }}</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="5" class="text-center text-gray-500 py-4">No hay compras registradas.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <a href="{{ url_for('home') }}" class="button">
+        <i data-lucide="arrow-left" class="icon"></i> Volver al Panel Principal
+    </a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrar Ventas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f4f7fc;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #4A90E2;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .button {
+            padding: 10px 20px;
+            background-color: #4A90E2;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .button:hover {
+            background-color: #357ABD;
+        }
+
+        form {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        select, input[type="date"], button {
+            padding: 10px;
+            margin-right: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            background-color: #4A90E2;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #357ABD;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f1f1f1;
+            color: #4A90E2;
+        }
+
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .footer a {
+            color: #4A90E2;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Administrar Ventas</h1>
+</header>
+
+<div class="container">
+    <div class="actions">
+        <a href="{{ url_for('admin_home') }}" class="button">
+            <i data-lucide="arrow-left-circle" class="icon"></i> Volver
+        </a>
+    </div>
+          
+    <!-- Formulario para filtros -->
+    <form method="POST">
+        <div>
+            <select name="filtro">
+                <option value="">Filtrar por</option>
+                <option value="dia">Día</option>
+                <option value="mes">Mes</option>
+                <option value="anio">Año</option>
+            </select>
+            <input type="date" name="fecha" required>
+            <button type="submit">Filtrar</button>
+        </div>
+    </form>
+
+    <!-- Tabla de ventas -->
+    <table>
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Cliente</th>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Precio Unitario</th>
+                <th>Monto Total</th>
+                <th>Total Venta</th>
+                <th>Tipo de Pago</th>
+                <th>Empleado</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for venta in ventas %}
+                <tr>
+                    <td>{{ venta.Fecha }}</td>
+                    <td>{{ venta.Cliente }}</td>
+                    <td>{{ venta.Producto }}</td>
+                    <td>{{ venta.Cantidad }}</td>
+                    <td>{{ venta.Precio_Unitario }}</td>
+                    <td>{{ venta.Monto_Total }}</td>
+                    <td>{{ venta.TotalVenta }}</td>
+                    <td>{{ venta.Tipo_Pago }}</td>
+                    <td>{{ venta.Empleado }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<a href="{{ url_for('home') }}" class="button">
+    <i data-lucide="arrow-left" class="icon"></i> Volver al Panel Principal
+</a>
+</div>
+
+<script>
+lucide.createIcons();
+</script>
+</body>
+</html>

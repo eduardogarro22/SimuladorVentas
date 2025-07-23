@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Registrar Venta</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-r from-blue-100 to-blue-400 min-h-screen flex justify-center items-center">
+
+<form action="{{ url_for('previsualizar_venta') }}" method="POST" class="..."></form>  
+
+    <h2 class="text-2xl font-bold mb-6 text-blue-800 dark:text-blue-300 text-center">Registrar Venta</h2>
+
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="mb-4 text-sm text-green-600">{{ messages[0] }}</div>
+      {% endif %}
+    {% endwith %}
+
+    <!-- Cliente -->
+    <div class="mb-4">
+      <label class="block font-semibold mb-1 dark:text-white">Cliente</label>
+      <select name="cliente" required class="w-full p-2 rounded border focus:ring-2 focus:ring-blue-400">
+        {% for cliente in clientes %}
+          <option value="{{ cliente[0] }}">{{ cliente[1] }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <!-- Productos y cantidades -->
+    <div class="mb-4" id="productos-container">
+      <label class="block font-semibold mb-1 dark:text-white">Productos y Cantidades</label>
+      <div class="flex gap-4 mb-2 producto-cantidad">
+        <select name="producto[]" required class="w-full p-2 rounded border focus:ring-2 focus:ring-blue-400">
+          {% for producto in productos %}
+            <option value="{{ producto[0] }}">{{ producto[1] }}</option>
+          {% endfor %}
+        </select>
+        <input type="number" name="cantidad[]" min="1" required class="w-full p-2 rounded border focus:ring-2 focus:ring-blue-400" placeholder="Cantidad">
+      </div>
+    </div>
+
+    <div class="text-center mb-4">
+      <button type="button" id="agregarProducto" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">➕ Agregar Producto</button>
+    </div>
+
+    <!-- Forma de pago -->
+    <div class="mb-4">
+      <label class="block font-semibold mb-1 dark:text-white">Forma de Pago</label>
+      <select name="tipo_pago" required class="w-full p-2 rounded border focus:ring-2 focus:ring-blue-400">
+        <option value="Efectivo">Efectivo</option>
+        <option value="Tarjeta">Tarjeta</option>
+        <option value="Transferencia">Transferencia</option>
+      </select>
+    </div>
+
+    <!-- Empleado -->
+    <div class="mb-4">
+      <label class="block font-semibold mb-1 dark:text-white">Empleado</label>
+      <select name="empleado" required class="w-full p-2 rounded border focus:ring-2 focus:ring-blue-400">
+        {% for empleado in empleados %}
+          <option value="{{ empleado[0] }}">{{ empleado[1] }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <!-- Descuento -->
+    <div class="mb-6">
+      <label class="block font-semibold mb-1 dark:text-white">Descuento (%)</label>
+      <input type="number" name="descuento" step="0.01" min="0" max="100" class="w-full p-2 rounded border focus:ring-2 focus:ring-blue-400" placeholder="Opcional">
+    </div>
+
+    <button class="bg-blue-700 text-white font-semibold py-2 px-4 rounded hover:bg-blue-800 w-full">
+      Registrar Venta
+    </button>
+
+  </form>
+
+  <script>
+    document.getElementById('agregarProducto').addEventListener('click', function() {
+      const container = document.getElementById('productos-container');
+      const newProductRow = document.createElement('div');
+      newProductRow.classList.add('flex', 'gap-4', 'mb-2', 'producto-cantidad');
+      newProductRow.innerHTML = `
+        <select name="producto[]" required class="w-full p-2 rounded border focus:ring-2 focus:ring-blue-400">
+          {% for producto in productos %}
+            <option value="{{ producto[0] }}">{{ producto[1] }}</option>
+          {% endfor %}
+        </select>
+        <input type="number" name="cantidad[]" min="1" required class="w-full p-2 rounded border focus:ring-2 focus:ring-blue-400" placeholder="Cantidad">
+      `;
+      container.appendChild(newProductRow);
+    });
+  </script>
+
+</body>
+</html>

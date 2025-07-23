@@ -1,0 +1,61 @@
+<!-- templates/confirmar_venta.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmar Venta</title>
+    <link href="https://cdn.tailwindcss.com" rel="stylesheet">
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="max-w-2xl mx-auto bg-white p-6 rounded shadow">
+        <h1 class="text-2xl font-bold mb-4 text-blue-800">🧾 Confirmar Venta</h1>
+
+        <table class="w-full text-sm mb-4">
+            <thead>
+                <tr class="border-b">
+                    <th class="text-left py-2">Producto</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in detalles %}
+                <tr class="border-b">
+                    <td>{{ item.nombre }}</td>
+                    <td class="text-center">${{ item.precio }}</td>
+                    <td class="text-center">{{ item.cantidad }}</td>
+                    <td class="text-right">${{ item.subtotal }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="text-right">
+            <p>💰 Subtotal: <strong>${{ total }}</strong></p>
+            <p>🔻 Descuento: <strong>${{ descuento }}</strong></p>
+            <p class="text-xl font-bold text-green-700">💵 Total a pagar: ${{ total_final }}</p>
+        </div>
+
+        <form action="{{ url_for('confirmar_venta') }}" method="POST" class="mt-6">
+            <!-- Campos ocultos para reenviar los datos -->
+            <input type="hidden" name="id_cliente" value="{{ id_cliente }}">
+            <input type="hidden" name="tipo_pago" value="{{ tipo_pago }}">
+            <input type="hidden" name="id_empleado" value="{{ id_empleado }}">
+            <input type="hidden" name="descuento" value="{{ descuento }}">
+
+            {% for p in productos %}
+                <input type="hidden" name="productos[]" value="{{ p }}">
+            {% endfor %}
+            {% for c in cantidades %}
+                <input type="hidden" name="cantidades[]" value="{{ c }}">
+            {% endfor %}
+
+            <div class="flex justify-between mt-6">
+                <a href="{{ url_for('registrar_venta') }}" class="px-4 py-2 bg-gray-400 text-white rounded">Cancelar</a>
+                <button type="submit" class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded">✅ Confirmar Venta</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

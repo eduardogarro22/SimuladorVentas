@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Pagos de Sueldos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #e6f0ff;
+            margin: 0;
+            padding: 20px;
+        }
+
+        header {
+            background-color: #4A90E2;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 50px auto;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            padding: 30px;
+            text-align: center;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 14px 22px;
+            background-color: #4A90E2;
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #357ABD;
+        }
+
+        label {
+            display: block;
+            margin: 15px 0 5px;
+            text-align: left;
+        }
+
+        select, input {
+            padding: 8px;
+            width: 100%;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+
+        .form-group {
+            text-align: left;
+        }
+
+        .form-group input {
+            width: 80%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Realizar Pago de Sueldo</h1>
+    </header>
+
+    <div class="container">
+        <form action="{{ url_for('pago_sueldo') }}" method="POST">
+            <div class="form-group">
+                <label for="empleado">Empleado</label>
+                <select name="empleado_id" id="empleado" required>
+                    <option value="">Seleccione un empleado</option>
+                    {% for empleado in empleados %}
+                        <option value="{{ empleado.Id_Empleado }}">
+                            {{ empleado.Nombre }} {{ empleado.Apellido }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="monto">Monto del Pago</label>
+                <input type="number" name="monto" id="monto" step="0.01" required>
+            </div>
+
+            <div class="form-group">
+                <label for="detalle">Detalle</label>
+                <input type="text" name="detalle" id="detalle" placeholder="Descripción del pago" required>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="button">Realizar Pago</button>
+            </div>
+        </form>
+        <a href="{{ url_for('empleados') }}" class="button">Volver</a>
+    </div>
+</body>
+</html>

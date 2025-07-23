@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Proveedores</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f0f6ff;
+            margin: 0;
+            padding: 20px;
+        }
+
+        header {
+            background-color: #4A90E2;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            padding: 30px;
+            text-align: center;
+        }
+
+        a.button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 15px auto;
+            padding: 12px 20px;
+            background-color: #4A90E2;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            width: 85%;
+            font-size: 16px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        a.button:hover {
+            background-color: #357ABD;
+            transform: scale(1.03);
+        }
+
+        .icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        .form-input {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+
+        .form-container {
+            margin-top: 20px;
+        }
+
+        .form-container button {
+            width: 80%;
+            padding: 12px;
+            background-color: #4A90E2;
+            color: white;
+            border: none;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Gestión de Proveedores</h1>
+    </header>
+
+    <div class="container">
+        <a href="{{ url_for('admin_home') }}" class="button">
+            <i data-lucide="arrow-left" class="icon"></i> Volver al Panel Principal
+        </a>
+        
+        <!-- Lista de proveedores -->
+        <h2>Lista de Proveedores</h2>
+        <ul>
+            {% for proveedor in proveedores %}
+                <li>
+                    {{ proveedor.Nombre }}
+                    <form method="POST" style="display: inline;">
+                        <input type="hidden" name="proveedor_id" value="{{ proveedor.Id_Proveedor }}">
+                        <button type="submit" name="eliminar_proveedor" style="background-color: red;">Eliminar</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <!-- Formulario para agregar un nuevo proveedor -->
+        <div class="form-container">
+            <h3>Agregar Nuevo Proveedor</h3>
+            <form method="POST">
+                <input type="text" name="nombre" class="form-input" placeholder="Nombre del Proveedor" required>
+                <button type="submit" name="agregar_proveedor">Agregar Proveedor</button>
+            </form>
+        </div>
+        <br>
+        <a href="{{ url_for('home') }}" class="button">Volver</a>
+    </div>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
+

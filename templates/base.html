@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Página{% endblock %}</title>
+
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
+    <!-- Estilos personalizados -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        :root {
+            --color-primary: #4A90E2;
+            --color-hover-primary: #00B5E2;
+            --color-secondary: #4B5563;
+            --bg-light: #f0f6ff;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-[var(--bg-light)] text-gray-800">
+
+    <!-- Menú de navegación -->
+    <nav class="bg-[var(--color-primary)] p-4 shadow-lg rounded-b-xl">
+        <div class="container mx-auto text-white">
+            <ul class="flex space-x-8 text-lg font-semibold">
+                <li><a href="{{ url_for('home') }}" class="hover:text-[var(--color-hover-primary)] transition-all">Volver a Home</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Contenido principal -->
+    <main class="container mx-auto py-8 px-6">
+        {% block content %}{% endblock %}
+    </main>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

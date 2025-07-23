@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Inicio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f0f6ff;
+            margin: 0;
+            padding: 20px;
+        }
+
+        header {
+            background-color: #4A90E2;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            padding: 30px;
+            text-align: center;
+        }
+
+        a.button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 15px auto;
+            padding: 12px 20px;
+            background-color: #4A90E2;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            width: 85%;
+            font-size: 16px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        a.button:hover {
+            background-color: #357ABD;
+            transform: scale(1.03);
+        }
+
+        .icon {
+            width: 20px;
+            height: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Bienvenido, {{ usuario }}!</h1>
+    </header>
+
+    <div class="container">
+        {% if rol == 'admin' %}
+            <a href="{{ url_for('admin_ventas') }}" class="button">
+                <i data-lucide="folder-edit" class="icon"></i> Administrar Ventas
+            </a>
+            <a href="{{ url_for('gestionar_productos') }}" class="button">
+                <i data-lucide="package-search" class="icon"></i> Gestionar Productos
+            </a>
+            <a href="{{ url_for('realizar_pago') }}" class="button">
+                <i data-lucide="wallet" class="icon"></i> Realizar Pago
+            </a>
+            <a href="{{ url_for('editar_clientes') }}" class="button">
+                <i data-lucide="users" class="icon"></i> Editar Clientes
+            </a>
+            <!-- Botones para Empleados y Proveedores -->
+            <a href="{{ url_for('empleados') }}" class="button">
+                <i data-lucide="user-check" class="icon"></i> Gestionar Empleados
+            </a>
+            <a href="{{ url_for('proveedores') }}" class="button">
+                <i data-lucide="box" class="icon"></i> Gestionar Proveedores
+            </a>
+        {% elif rol == 'vendedor' %}
+            <a href="{{ url_for('registrar_venta') }}" class="button">
+                <i data-lucide="shopping-cart" class="icon"></i> Registrar Venta
+            </a>
+            <a href="{{ url_for('agregar_cliente') }}" class="button">
+                <i data-lucide="user-plus" class="icon"></i> Agregar Cliente
+            </a>
+        {% endif %}
+        <a href="{{ url_for('logout') }}" class="button">
+            <i data-lucide="log-out" class="icon"></i> Cerrar sesión
+        </a>
+    </div>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+import pyodbc
+
+try:
+    conn = pyodbc.connect(
+        "DRIVER={ODBC Driver 17 for SQL Server};"
+        "SERVER=Edu\\SQLEXPRESS;"
+        "DATABASE=Fabrica_de_Pruebas;"
+        "UID=flask_user;"
+        "PWD=TuContraseñaAquí123;"
+    )
+    print("✅ Conexión exitosa")
+    conn.close()
+except Exception as e:
+    print(f"❌ Error: {e}")
